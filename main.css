@@ -26,6 +26,7 @@ header h1 {
     padding: .75rem 0 1% 1.5%;
     font-size: 2rem;
     letter-spacing: 3px;
+    font-family:'Times New Roman', Times, serif;
 }
 header h2 {
     color: black;
@@ -37,7 +38,7 @@ header h2 {
 nav {
     background-color: gray;
     border-top: solid 2px black;
-    border-bottom: solid 1px black;
+    border-bottom: solid 2px black;
 }
 
 nav ul.menu {
@@ -50,7 +51,7 @@ nav ul.menu li {
 }
 nav ul.menu li a {
    display: block;
-   padding: .5rem 1.5rem;
+   padding: .5rem 3rem;
    color: #f3f3f3;
    text-decoration: none;
    border-right: solid 1px #f3f3f3;
@@ -61,10 +62,18 @@ nav ul.menu li a:hover {
     color: gray;
 }
 
-nav ul.menu li a:active {
-    color: red;
-    background-color: #ebeaea;
+nav ul.menu li.active a {
+    color: #ebeaea;
+    background-color: red;
 }
+
+
+/* main */
+
+main {
+    padding: .5rem 1.5%;
+}
+
 /* body */
 
 
