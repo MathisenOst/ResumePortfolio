@@ -282,7 +282,7 @@ background-image: linear-gradient(
 
   /* Centered content box, ~1 inch margins (varies by screen DPI) */
   .page {
-    max-width: 1100px;   /* adjust this to make margins bigger/smaller */
+    max-width: 1200px;   /* adjust this to make margins bigger/smaller */
     margin: 0 auto;      /* centers it */
     background: white;   /* your content stays white */
     border-radius: 12px;
