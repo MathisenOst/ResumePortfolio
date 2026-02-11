@@ -1,74 +1,205 @@
 
-/* ===== Mobile-first collapsed menu IN FLOW (so it pushes content) ===== */
+/* ================================
+   Reset & Base
+===================================*/
+body, p, h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+}
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Signika', sans-serif;
+  font-weight: 300;
+  color: #333;
+  background-color: white;
+  font-size: 16px;
+}
+
+/* ================================
+   Header
+===================================*/
+header {
+  background-color: #f3f3f3;
+}
+header h1 {
+  color: black;
+  padding: .75rem 0 1% 1.5%;
+  font-size: 2rem;
+  letter-spacing: 3px;
+  font-family: 'Times New Roman', Times, serif;
+}
+header h2 {
+  color: black;
+  padding: 1rem 0 0 2%;
+  font-size: 1.5rem;
+}
+
+/* ================================
+   Navigation
+   - Desktop: original horizontal (floats)
+   - Mobile: stacked, collapsible
+===================================*/
+nav {
+  background-color: gray;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  position: relative; /* safe for internal positioning if needed */
+}
+
+/* Clearfix to prevent floated children from overlapping following content */
+nav::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* Menu base */
 nav ul.menu {
-  /* keep it in flow so it doesn’t cover the body */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  /* Mobile-first: keep in normal flow so it pushes content down */
   position: static;
   background: gray;
-  border-bottom: solid 2px black;
+  border-bottom: 2px solid black;
 
-  /* collapsed by default */
+  /* Collapsed by default on mobile; opened via checkbox */
   max-height: 0;
   overflow: hidden;
   transition: max-height .3s ease;
-  margin: 0;
-  padding: 0;
 }
 
-/* Open when toggled */
-.nav-toggle:checked ~ ul.menu {
-  max-height: 60vh; /* enough room for several items; adjust if needed */
-}
-
-/* ===== Mobile stacked items ===== */
+/* Desktop defaults (will be re-applied at >=768px) */
 nav ul.menu li {
-  float: none;                 /* stack vertically */
-  width: 100%;                 /* ensure full row */
-  border-top: 1px solid rgba(243,243,243,0.25);
-}
-nav ul.menu li:first-child {
-  border-top: none;
+  float: left;
 }
 nav ul.menu li a {
-  display: block;              /* full tap area */
-  width: 100%;
-  padding: 0.9rem 1rem;        /* touch-friendly */
+  display: block;
+  padding: .5rem 3rem;
   color: #f3f3f3;
   text-decoration: none;
-  border-right: none;          /* remove desktop divider on mobile */
+  border-right: 1px solid #f3f3f3;
+}
+nav ul.menu li a:hover {
+  background-color: #f3f3f3;
+  color: gray;
+}
+nav ul.menu li.active a {
+  color: #ebeaea;
+  background-color: red;
 }
 
-/* ===== Show hamburger and stacked layout on small screens ===== */
+/* ================================
+   Mobile toggle (checkbox + hamburger)
+===================================*/
+.nav-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hidden on desktop, shown on mobile */
+.nav-toggle-label {
+  display: none;
+  cursor: pointer;
+  padding: .75rem 1rem;
+  color: #f3f3f3;
+  background: gray;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  user-select: none;
+  align-items: center;
+}
+
+/* Hamburger icon */
+.nav-toggle-label .burger,
+.nav-toggle-label .burger::before,
+.nav-toggle-label .burger::after {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: #f3f3f3;
+  position: relative;
+  transition: transform .25s ease, top .25s ease, opacity .25s ease;
+}
+.nav-toggle-label .burger::before,
+.nav-toggle-label .burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.nav-toggle-label .burger::before { top: -8px; }
+.nav-toggle-label .burger::after  { top: 8px; }
+
+/* Animate to X when open */
+.nav-toggle:checked + .nav-toggle-label .burger { background: transparent; }
+.nav-toggle:checked + .nav-toggle-label .burger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+.nav-toggle:checked + .nav-toggle-label .burger::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Open the menu when toggled */
+.nav-toggle:checked ~ ul.menu {
+  max-height: 60vh; /* enough to show items; adjust as needed */
+}
+
+/* ================================
+   Mobile layout (<= 767px): stacked items
+===================================*/
 @media (max-width: 767px) {
+  /* Show the hamburger bar */
   .nav-toggle-label {
     display: inline-flex;
     width: 100%;
     justify-content: flex-start;
     gap: .5rem;
     align-items: center;
-    min-height: 48px;
-    padding: .75rem 1rem;
+    min-height: 48px; /* touch-friendly */
+    line-height: 1;
+  }
+
+  /* Force stacking: kill floats and make full width */
+  nav ul.menu > li {
+    float: none !important;
+    display: block !important;
+    width: 100% !important;
+    border-top: 1px solid rgba(243,243,243,0.25);
+  }
+  nav ul.menu > li:first-child { border-top: none; }
+
+  nav ul.menu > li > a {
+    display: block !important;
+    width: 100% !important;
+    padding: 0.9rem 1rem;
     color: #f3f3f3;
-    background: gray;
-    border-top: solid 2px black;
-    border-bottom: solid 2px black;
+    text-decoration: none;
+    border-right: 0 !important; /* remove desktop divider */
   }
 }
 
-/* ===== Desktop: restore horizontal menu ===== */
+/* ================================
+   Desktop (>= 768px): restore original horizontal nav
+===================================*/
 @media (min-width: 768px) {
+  /* Hide hamburger on desktop */
   .nav-toggle-label { display: none; }
 
+  /* Desktop menu: visible and horizontal */
   nav ul.menu {
-    position: static;
     max-height: none;
-    display: block;
+    overflow: visible;
     background: transparent;
     border-bottom: none;
-    overflow: visible;
   }
 
   nav ul.menu li {
-    float: left;          /* back to your original horizontal layout */
+    float: left;
     width: auto;
     border-top: none;
   }
@@ -78,7 +209,31 @@ nav ul.menu li a {
     padding: .5rem 3rem;
     color: #f3f3f3;
     text-decoration: none;
-    border-right: solid 1px #f3f3f3;
+    border-right: 1px solid #f3f3f3;
   }
 }
-``
+
+/* ================================
+   Main
+===================================*/
+main {
+  padding: .5rem 1.5%;
+  /* Safety: if floats ever leak, ensure main starts below nav */
+  clear: both;
+}
+
+/* ================================
+   Footer
+===================================*/
+footer {
+  text-align: center;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+/* ================================
+   Misc (keepOpen no longer needed due to clearfix,
+   but harmless if left in your HTML)
+===================================*/
+div.keepOpen { clear: both; }
