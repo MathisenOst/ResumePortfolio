@@ -174,6 +174,18 @@ nav ul.menu li.active a {
   .nav-toggle-label .mobile-title {
     margin-left: .5rem; /* adjust as you like */
   }
+   
+   /* Hide the desktop H1 on mobile */
+  .desktop-title {
+    display: none !important;
+  }
+
+  /* Show the mobile H1 on mobile */
+  .mobile-title {
+    display: block !important;
+    text-align: center;  /* optional */
+  }
+
 
    
   /* Hide your desktop header title on mobile */
