@@ -257,7 +257,8 @@ nav ul.menu li.active a {
   }
 
 body {
-   background: linear-gradient(135deg, #eef2f7 0%, #e2e8f0 100%);
+
+  background: linear-gradient(135deg, #ff00ff, #00ffff) !important;
   /* background: linear-gradient(135deg, #ff00ff, #00ffff);*/
     /* Full viewport height ensures gradient fills the screen */
    min-height: 100vh;
