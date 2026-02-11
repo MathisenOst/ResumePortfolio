@@ -152,15 +152,20 @@ nav ul.menu li.active a {
 /* ================================
    Mobile layout (<= 767px): stacked items
 ===================================*/
+
+/* Desktop title visible only on desktop */
+.desktop-title { display: block; }
+.mobile-title { display: none; }
+
+
 @media (max-width: 767px) {
   /* Show the hamburger bar */
   .nav-toggle-label {
     display: inline-flex;
     width: 100%;
-    justify-content: center; /* center horizontally */
+    justify-content: flex-start; /* center horizontally */
     gap: .5rem;
     align-items: center;
-     text-align: center;      /* centers any text nodes */
     min-height: 48px; /* touch-friendly */
     line-height: 1;
   }
@@ -172,13 +177,20 @@ nav ul.menu li.active a {
 
    
   /* Hide your desktop header title on mobile */
-  header h1 {
+  /*header h1 {
     display: none !important;
     visibility: hidden;
     height: 0;
     margin: 0;
     padding: 0;
+  }*/
+   
+  .desktop-title { display: none !important; }
+  .mobile-title { 
+    display: block !important;
+    text-align: center;   /* optional */
   }
+
 
   /* Force stacking: kill floats and make full width */
   nav ul.menu > li {
