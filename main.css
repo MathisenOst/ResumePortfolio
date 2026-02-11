@@ -71,7 +71,7 @@ nav ul.menu {
   transition: max-height .3s ease;
 }
 
-/* Desktop defaults (will be re-applied at >=768px) */
+/* Desktop defaults (re-applied at >=768px) */
 nav ul.menu li {
   float: left;
 }
@@ -233,7 +233,6 @@ footer {
 }
 
 /* ================================
-   Misc (keepOpen no longer needed due to clearfix,
-   but harmless if left in your HTML)
+   Misc
 ===================================*/
 div.keepOpen { clear: both; }
