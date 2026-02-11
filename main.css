@@ -184,7 +184,7 @@ nav ul.menu li.active a {
   /* Show the mobile H1 on mobile */
   .mobile-title {
     display: block !important;
-    text-align: center;  /* optional */
+   /* text-align: center; */ /* optional */
   }
 
 
