@@ -3,7 +3,7 @@
    Reset & Base
 ===================================*/
 * { box-sizing: border-box; }
-body, p, h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
+/*body,*/ p, h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
 
 body {
   font-family: 'Signika', sans-serif;
@@ -214,6 +214,7 @@ nav ul.menu li.active a {
       #c9c9c9 100%
     );
     min-height: 100vh;
+    padding-left:100px;
   }
 
   .page {
