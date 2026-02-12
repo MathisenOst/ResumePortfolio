@@ -2,25 +2,20 @@
 /* ================================
    Reset & Base
 ===================================*/
-body, p, h1, h2, h3, h4, h5, h6 {
-  padding: 0;
-  margin: 0;
-}
 * { box-sizing: border-box; }
-body {
-    font-family: 'Signika', sans-serif;
-   font-weight: 300;
-     color: #333;
-   font-size: 16px;
-  } 
+body, p, h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; }
 
+body {
+  font-family: 'Signika', sans-serif;
+  font-weight: 300;
+  color: #333;
+  font-size: 16px;
+}
 
 /* ================================
    Header
 ===================================*/
-header {
-  background-color: #e0e0e0;
-}
+header { background-color: #e0e0e0; }
 header h1 {
   color: black;
   padding: .75rem 0 1% 1.5%;
@@ -36,58 +31,34 @@ header h2 {
 
 /* ================================
    Navigation
-   - Desktop: original horizontal (floats)
+   - Desktop: flex, equal-width items
    - Mobile: stacked, collapsible
 ===================================*/
 nav {
   background-color: gray;
   border-top: 2px solid black;
   border-bottom: 2px solid black;
-  position: relative; /* safe for internal positioning if needed */
+  position: relative;
 }
 
-/* Clearfix to prevent floated children from overlapping following content */
-nav::after {
-  content: "";
-  display: block;
-  clear: both;
+/* Mobile-first: collapsed menu (opened via checkbox) */
+nav ul.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  background: gray;
+  border-bottom: 2px solid black;
+  transition: max-height .3s ease;
 }
+nav ul.menu li { list-style: none; }
 
-
-  /* Desktop menu: visible, horizontal, full width */
-  nav ul.menu {
-    display: flex;        /* Enable flexbox */
-    width: 100%;          /* Full width of nav */
-    padding: 0;
-    margin: 0;
-    max-height: none;
-    overflow: visible;
-    background: transparent;
-    border-bottom: none;
-  }
-
-
-/* Desktop defaults (re-applied at >=768px) */
-
-  /* Make each <li> item grow equally */
-  nav ul.menu li {
-    flex: 1;              /* Each item takes equal space */
-    border-top: none;
-  }
-
-
+/* Shared link styles */
 nav ul.menu li a {
-    display: flex;        /* Allows centering text */
-    justify-content: center;
-    align-items: center;
-    width: 100%;          /* Make link fill the entire flex item */
-    height: 100%;
-    padding: .75rem 0;    /* Vertical padding, horizontal not needed */
-    color: #f3f3f3;
-    text-decoration: none;
-    border-right: 1px solid #f3f3f3;
-  }
-
+  color: #f3f3f3;
+  text-decoration: none;
+}
 nav ul.menu li a:hover {
   background-color: #f3f3f3;
   color: gray;
@@ -151,157 +122,118 @@ nav ul.menu li.active a {
 }
 
 /* Open the menu when toggled */
-.nav-toggle:checked ~ ul.menu {
-  max-height: 60vh; /* enough to show items; adjust as needed */
-}
+.nav-toggle:checked ~ ul.menu { max-height: 60vh; }
 
 /* ================================
-   Mobile layout (<= 767px): stacked items
+   Desktop/Mobile titles (kept intact)
 ===================================*/
-
-/* Desktop title visible only on desktop */
 .desktop-title { display: block; }
-.mobile-title { display: none; }
+.mobile-title  { display: none; }
 
-
+/* ================================
+   Mobile (<= 767px): show hamburger, stack items
+===================================*/
 @media (max-width: 767px) {
-  /* Show the hamburger bar */
   .nav-toggle-label {
     display: inline-flex;
     width: 100%;
-    justify-content: flex-start; /* center horizontally */
+    justify-content: flex-start;
     gap: .5rem;
     align-items: center;
-    min-height: 48px; /* touch-friendly */
+    min-height: 48px;
     line-height: 1;
-     text-align:left;
-  }
-   
-  /* If you added .mobile-title, keep a small gap from the icon/text */
-  .nav-toggle-label .mobile-title {
-    margin-left: .5rem; /* adjust as you like */
-  }
-   
-   /* Hide the desktop H1 on mobile */
-  .desktop-title {
-    display: none !important;
+    text-align: left;
   }
 
-  /* Show the mobile H1 on mobile */
-  .mobile-title {
-    display: block !important;
-    text-align: left;  /* optional */
-  }
-
- body { 
-
-}
-
-   
-  /* Hide your desktop header title on mobile */
-  /*header h1 {
-    display: none !important;
-    visibility: hidden;
-    height: 0;
-    margin: 0;
-    padding: 0;
-  }*/
-   
+  /* Title visibility overrides on mobile */
   .desktop-title { display: none !important; }
-  .mobile-title { 
-    display: block !important;
-    text-align: center;   /* optional */
-  }
+  .mobile-title  { display: block !important; text-align: left; }
 
-
-  /* Force stacking: kill floats and make full width */
+  /* Stacked, full-width menu items */
   nav ul.menu > li {
-    float: none !important;
-    display: block !important;
-    width: 100% !important;
+    width: 100%;
     border-top: 1px solid rgba(243,243,243,0.25);
   }
   nav ul.menu > li:first-child { border-top: none; }
 
   nav ul.menu > li > a {
-    display: block !important;
-    width: 100% !important;
+    display: block;
+    width: 100%;
     padding: 0.9rem 1rem;
     color: #f3f3f3;
     text-decoration: none;
-    border-right: 0 !important; /* remove desktop divider */
+    border-right: 0; /* no divider in mobile */
   }
 }
 
 /* ================================
-   Desktop (>= 768px): restore original horizontal nav
+   Desktop (>= 768px): horizontal flex menu
 ===================================*/
 @media (min-width: 768px) {
   /* Hide hamburger on desktop */
   .nav-toggle-label { display: none; }
 
-  /* Desktop menu: visible and horizontal */
+  /* Full-width flex row */
   nav ul.menu {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
     max-height: none;
     overflow: visible;
     background: transparent;
     border-bottom: none;
   }
 
-  nav ul.menu li {
-    float: left;
-    width: auto;
-    border-top: none;
-  }
+  /* Equal-width items */
+  nav ul.menu li { flex: 1; }
 
+  /* Centered link cell + right divider */
   nav ul.menu li a {
-    display: block;
-    /*padding: .5rem 3rem;*/
-    padding: .5rem .5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: .75rem 0;
+    text-align: center;
     color: #f3f3f3;
     text-decoration: none;
     border-right: 1px solid #f3f3f3;
   }
+  nav ul.menu li:last-child a { border-right: none; }
 
-body { 
-   background-image: linear-gradient(
-   to bottom,
-   #ffffff 0%,
-   #eeeeee 35%,
-   #dddddd 70%,
-   #c9c9c9 100%); 
-    /* Full viewport height ensures gradient fills the screen */
-   min-height: 100vh;  
-  }   
-
-  /* Centered content box, ~1 inch margins (varies by screen DPI) */
-  .page {
-    max-width: 1200px;   /* adjust this to make margins bigger/smaller */
-    margin: 0 auto;      /* centers it */
-    background: white;   /* your content stays white */
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    overflow: hidden;    /* so header/nav round correctly */
+  /* Page chrome / layout */
+  body {
+    background-image: linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #eeeeee 35%,
+      #dddddd 70%,
+      #c9c9c9 100%
+    );
+    min-height: 100vh;
   }
 
-  /* Ensure internal sections don’t add huge side padding */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
   header, nav, main, footer {
     padding-left: 16px;
     padding-right: 16px;
   }
 }
 
-   
-}
-
 /* ================================
    Main
 ===================================*/
-main {
-  padding: .5rem 1.5%;
-  /* Safety: if floats ever leak, ensure main starts below nav */
-  clear: both;
-}
+main { padding: .5rem 1.5%; }
 
 /* ================================
    Footer
